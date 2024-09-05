@@ -3,6 +3,7 @@ import { app } from "./firebase_core.js";
 import { DEV } from "../model/constants.js";
 import { homePageView } from "../view/home_page.js";
 import { signinPageView } from "../view/signin_page.js";
+import { routing } from "./route_controller.js";
 
 const auth = getAuth(app);
 
@@ -35,7 +36,9 @@ function authStateChangeListner(user){
         for(let i=0;i<postAuth.length;i++){
             postAuth[i].classList.replace('d-none','d-block');
         }
-        homePageView();
+        const pathname = window.location.pathname;
+        const hash = window.location.hash;
+        routing(pathname, hash);
     }
     else{
         const postAuth = document.getElementsByClassName('myclass-postauth');
