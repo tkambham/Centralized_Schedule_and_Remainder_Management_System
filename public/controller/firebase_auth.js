@@ -4,6 +4,7 @@ import { DEV } from "../model/constants.js";
 import { homePageView } from "../view/home_page.js";
 import { signinPageView } from "../view/signin_page.js";
 import { routePathnames, routing } from "./route_controller.js";
+import { userInfo } from "../view/elements.js";
 
 const auth = getAuth(app);
 
@@ -35,6 +36,7 @@ export function attachAuthStateChangObserver()
 function authStateChangeListner(user){
     currentUser = user;
     if(user){
+        userInfo.innerHTML = user.email;
         const postAuth = document.getElementsByClassName('myclass-postauth');
         for(let i=0;i<postAuth.length;i++){
             postAuth[i].classList.replace('d-none','d-block');
@@ -44,6 +46,7 @@ function authStateChangeListner(user){
         routing(pathname, hash);
     }
     else{
+        userInfo.innerHTML = 'No User';
         const postAuth = document.getElementsByClassName('myclass-postauth');
         for(let i=0;i<postAuth.length;i++){
             postAuth[i].classList.replace('d-block','d-none');
