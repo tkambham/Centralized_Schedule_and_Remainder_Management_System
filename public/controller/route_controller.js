@@ -15,7 +15,12 @@ export function routing(pathname, hash)
 {
     const route = routes.find(r => r.path === pathname);
     if(route){
-        route.page();
+        if(hash && hash.length > 1){
+            route.page(hash.substring(1)); 
+        }
+        else{
+            route.page();
+        }
     }
     else{
         routes[0].page();
