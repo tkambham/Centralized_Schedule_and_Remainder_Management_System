@@ -3,7 +3,7 @@ import { app } from "./firebase_core.js";
 import { DEV } from "../model/constants.js";
 import { homePageView } from "../view/home_page.js";
 import { signinPageView } from "../view/signin_page.js";
-import { routing } from "./route_controller.js";
+import { routePathnames, routing } from "./route_controller.js";
 
 const auth = getAuth(app);
 
@@ -45,6 +45,7 @@ function authStateChangeListner(user){
         for(let i=0;i<postAuth.length;i++){
             postAuth[i].classList.replace('d-block','d-none');
         }
+        history.pushState(null, null, routePathnames.HOME);
         signinPageView();
     }
 }
