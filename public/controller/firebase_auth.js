@@ -1,5 +1,6 @@
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js"
-import { app } from "./firebase.js";
+import { app } from "./firebase_core.js";
+import { DEV } from "../model/constants.js";
 
 const auth = getAuth(app);
 
@@ -14,7 +15,9 @@ export async function signinFirebase(e)
         const user = userCredential.user;
     }
     catch(error){
+        if (DEV) console.error('signin error', error);
         const errorCode = error.code;
         const errorMessage = error.message;
+        alert('Signin Error: ' + errorCode + ' ' + errorMessage);
     }
 }
