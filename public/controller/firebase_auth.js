@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js"
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js"
 import { app } from "./firebase_core.js";
 import { DEV } from "../model/constants.js";
 
@@ -24,7 +24,7 @@ export async function signinFirebase(e)
 
 export function onAuthStateChangObserver()
 {
-    onAuthStateChanged(auth, authStateChangeListener);
+    onAuthStateChanged(auth, authStateChangeListner);
 }
 
 function authStateChangeListner(user){
@@ -34,4 +34,8 @@ function authStateChangeListner(user){
     else{
         console.log('signed out');
     }
+}
+
+export async function signOutFirbase(){
+    await signOut(auth);
 }
