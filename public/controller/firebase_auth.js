@@ -1,6 +1,8 @@
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js"
 import { app } from "./firebase_core.js";
 import { DEV } from "../model/constants.js";
+import { homePageView } from "../view/home_page.js";
+import { signinPageView } from "../view/signin_page.js";
 
 const auth = getAuth(app);
 
@@ -29,10 +31,10 @@ export function attachAuthStateChangObserver()
 
 function authStateChangeListner(user){
     if(user){
-        console.log('user:', user.email);
+        homePageView();
     }
     else{
-        console.log('signed out');
+        signinPageView();
     }
 }
 
