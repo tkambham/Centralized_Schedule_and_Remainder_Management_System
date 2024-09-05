@@ -7,3 +7,9 @@ document.getElementById('menu-menu2').onclick = onClickMenu2Menu;
 document.getElementById('menu-signout').onclick = onClickSignoutMenu;
 
 attachAuthStateChangObserver();
+
+window.onload = function(e){
+    const pathname = window.location.pathname;
+    const hash = window.location.hash;
+    console.log(pathname, hash)
+}
