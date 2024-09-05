@@ -3,9 +3,18 @@ import { app } from "./firebase.js";
 
 const auth = getAuth(app);
 
-export function signinFirebase(e)
+export async function signinFirebase(e)
 {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+
+    try{
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+    }
+    catch(error){
+        const errorCode = error.code;
+        const errorMessage = error.message;
+    }
 }
