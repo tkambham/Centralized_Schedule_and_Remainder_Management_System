@@ -8,5 +8,13 @@ export async function homePageView()
         root.innerHTML = await protectedView();
         return;
     }
-    root.innerHTML = '<h1>Home Page</h1>';
+    
+    const response = await fetch('/view/templates/home_page_template.html',
+        {cache: "no-store"});
+    const divWrapper = document.createElement('div');
+    divWrapper.innerHTML = await response.text();
+    divWrapper.classList.add('m-4','p-4');
+
+    root.innerHTML='';
+    root.appendChild(divWrapper);
 }
