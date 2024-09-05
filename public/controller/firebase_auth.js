@@ -31,9 +31,27 @@ export function attachAuthStateChangObserver()
 
 function authStateChangeListner(user){
     if(user){
+        const postAuth = document.getElementsByClassName('myclass-postauth');
+        for(let i=0;i<postAuth.length;i++){
+            postAuth[i].classList.replace('d-none','d-block');
+        }
+
+        const preAuth = document.getElementsByClassName('myclass-preauth');
+        for(let i=0;i<postAuth.length;i++){
+            preAuth[i].classList.replace('d-block','d-none');
+        }
         homePageView();
     }
     else{
+        const postAuth = document.getElementsByClassName('myclass-postauth');
+        for(let i=0;i<postAuth.length;i++){
+            postAuth[i].classList.replace('d-block','d-none');
+        }
+
+        const preAuth = document.getElementsByClassName('myclass-preauth');
+        for(let i=0;i<postAuth.length;i++){
+            preAuth[i].classList.replace('d-none','d-block');
+        }
         signinPageView();
     }
 }
