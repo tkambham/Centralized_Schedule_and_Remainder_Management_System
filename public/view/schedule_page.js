@@ -2,7 +2,7 @@ import { currentUser } from "../controller/firebase_auth.js";
 import { root } from "./elements.js";
 import { protectedView } from "./protected_view.js";
 
-export async function menu2PageView()
+export async function schedulePageView()
 {
     if(!currentUser){
         root.innerHTML = await protectedView();
