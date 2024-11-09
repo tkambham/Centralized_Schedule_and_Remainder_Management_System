@@ -8,7 +8,7 @@ export const routePathnames = {
 
 export const routes = [
     {path: routePathnames.HOME, page: homePageView},
-    {path: routePathnames.MENU2, page: schedulePageView},
+    {path: routePathnames.SCHEDULE, page: schedulePageView},
 ]
 
 export function routing(pathname, hash)
