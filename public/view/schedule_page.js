@@ -1,4 +1,5 @@
 import { currentUser } from "../controller/firebase_auth.js";
+import { onChangeApponinmentTime, onClickSaveAppointment } from "../controller/schedule_controller.js";
 import { root } from "./elements.js";
 import { protectedView } from "./protected_view.js";
 
@@ -14,7 +15,7 @@ export async function schedulePageView() {
     divWrapper.innerHTML = await response.text();
     divWrapper.classList.add('m-4', 'p-4');
 
-    divWrapper.querySelector('appointment-time').oninput = onInputAppointmentTime;
+    divWrapper.querySelector('#appointment-time').oninput = onChangeApponinmentTime;
     divWrapper.querySelector('#save-appointment').onclick = onClickSaveAppointment;
 
     root.innerHTML = '';
