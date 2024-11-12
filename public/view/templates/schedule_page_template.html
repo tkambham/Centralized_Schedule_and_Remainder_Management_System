@@ -9,29 +9,33 @@
 
     <div class="container mt-5">
         <div class="card p-4">
-            <form action="/submit_schedule" method="POST">
-                <!-- Appointment Title -->
+            <form method="POST">
                 <div class="mb-3">
                     <label for="appointment-title" class="form-label">Appointment Title</label>
                     <input type="text" class="form-control" id="appointment-title" name="appointment_title" placeholder="Enter the title of your appointment" required>
                 </div>
-
-                <!-- Date -->
                 <div class="mb-3">
                     <label for="appointment-date" class="form-label">Date</label>
                     <input type="date" class="form-control" id="appointment-date" name="appointment_date" required>
                 </div>
-
-                <!-- Time -->
                 <div class="mb-3">
                     <label for="appointment-time" class="form-label">Time</label>
                     <input type="time" class="form-control" id="appointment-time" name="appointment_time" required>
                 </div>
-
-                <!-- Appointment Type -->
+                <div class="mb-3 d-none">
+                    <label for="early-remainder-time" class="form-label">Early Remainder</label>
+                    <select class="form-select" id="early-remainder-time" name="early_remainder_time" required>
+                        <option value="30" selected>30 mins</option>
+                        <option value="60">1 hour</option>
+                        <option value="120">2 hours</option>
+                        <option value="360">6 hours</option>
+                        <option value="1440">1 day</option>
+                    </select>
+                </div>
                 <div class="mb-3">
                     <label for="appointment-type" class="form-label">Appointment Type</label>
                     <select class="form-select" id="appointment-type" name="appointment_type" required>
+                        <option value="select" selected>Select a Option</option>
                         <option value="meeting">Meeting</option>
                         <option value="call">Call</option>
                         <option value="doctor">Doctor's Appointment</option>
@@ -39,26 +43,17 @@
                         <option value="other">Other</option>
                     </select>
                 </div>
-
-                <!-- Description -->
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <label for="appointment-description" class="form-label">Description</label>
                     <textarea class="form-control" id="appointment-description" name="appointment_description" rows="4" placeholder="Provide a brief description of the appointment"></textarea>
-                </div>
-
-                <!-- Notes -->
+                </div> -->
                 <div class="mb-3">
                     <label for="appointment-notes" class="form-label">Additional Notes</label>
                     <textarea class="form-control" id="appointment-notes" name="appointment_notes" rows="3" placeholder="Any additional information or notes"></textarea>
                 </div>
-
-                <!-- Submit Button -->
                 <button type="submit" class="btn btn-primary w-100">Save Appointment</button>
             </form>
         </div>
     </div>
-
-    <!-- Bootstrap 5 JavaScript Bundle (for interactive elements) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
