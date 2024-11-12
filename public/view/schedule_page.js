@@ -16,7 +16,7 @@ export async function schedulePageView() {
     divWrapper.classList.add('m-4', 'p-4');
 
     divWrapper.querySelector('#appointment-time').oninput = onChangeApponinmentTime;
-    divWrapper.querySelector('#save-appointment').onclick = onClickSaveAppointment;
+    divWrapper.querySelector('#form-create').onsubmit = onClickSaveAppointment;
 
     root.innerHTML = '';
     root.appendChild(divWrapper);
