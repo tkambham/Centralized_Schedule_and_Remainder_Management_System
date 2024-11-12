@@ -1,5 +1,6 @@
 import { Appointments } from "../model/appointments.js";
 import { currentUser } from "./firebase_auth.js";
+import { addAppointment } from "./firestore_controller.js";
 
 export function onChangeApponinmentTime(e) {
     const time = e.target.value;
@@ -30,7 +31,7 @@ export async function onClickSaveAppointment(e) {
 
     try{
         const docId = await addAppointment(appointment);
-        Appointments.set_docId(docId);
+        appointment.set_docId(docId);
     }
     catch(e){
         console.log('Failed to save appointment', e);
