@@ -1,7 +1,5 @@
 import { currentUser } from "../controller/firebase_auth.js";
-import { app } from "../controller/firebase_core.js";
-import { onSubmitCalcForm, renderAppointmentList } from "../controller/home_controller.js";
-import { DEV } from "../model/constants.js";
+import { renderAppointmentList } from "../controller/home_controller.js";
 import { root } from "./elements.js";
 import { protectedView } from "./protected_view.js";
 
