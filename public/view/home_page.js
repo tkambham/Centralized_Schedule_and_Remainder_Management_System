@@ -1,6 +1,6 @@
 import { currentUser } from "../controller/firebase_auth.js";
 import { app } from "../controller/firebase_core.js";
-import { onSubmitCalcForm } from "../controller/home_controller.js";
+import { onSubmitCalcForm, renderAppointmentList } from "../controller/home_controller.js";
 import { DEV } from "../model/constants.js";
 import { root } from "./elements.js";
 import { protectedView } from "./protected_view.js";
@@ -18,18 +18,7 @@ export async function homePageView()
     divWrapper.innerHTML = await response.text();
     divWrapper.classList.add('m-4','p-4');
 
-     let appointmentList;
-    // try{
-    //     appointmentList = await getAppointmentList(currentUser.email);
-    // }
-    // catch(e){
-    //     if(DEV) console.log('Failes to the appointment list', e);
-    //     alert('Failed to load the appointment list', JSON.stringify(e));
-    //     return;
-    // }
-
     renderAppointmentList(currentUser.email);
-    buildAppointmentCard(appointmentList);
 
     root.innerHTML='';
     root.appendChild(divWrapper);
