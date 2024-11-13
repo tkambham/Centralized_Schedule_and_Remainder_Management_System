@@ -1,3 +1,7 @@
+import { DEV } from "../model/constants.js";
+import { getAppointmentList } from "./firestore_controller.js";
+import { buildAppointmentCard } from "../view/home_page.js";
+
 export async function renderAppointmentList(email){
     let appointmentList;
     try{

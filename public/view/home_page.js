@@ -22,7 +22,7 @@ export async function homePageView()
     root.appendChild(divWrapper);
 }
 
-function buildAppointmentCard(appointment){
+export function buildAppointmentCard(appointment){
     const div = document.createElement('div');
     div.classList.add('card', 'm-2', 'p-2', 'd-inline-block');
     div.style.width = '18rem';
