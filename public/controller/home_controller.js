@@ -1,11 +1,20 @@
-export function onSubmitCalcForm(e){
-    e.preventDefault();
-    const nStr = e.target.number.value;
-    const n = parseInt(nStr);
-    const ul = document.getElementById('display');
-    const eqString = `${n} x ${n} = ${n*n}`;
-    const li = document.createElement('li');
-    li.innerText = eqString;
-    ul.appendChild(li);
-    e.target.number.value = '';
+export async function renderAppointmentList(email){
+    let appointmentList;
+    try{
+        appointmentList = await getAppointmentList(email);
+    }
+    catch(e){
+        if(DEV) console.log('Failes to the appointment list', e);
+        alert('Failed to load the appointment list', JSON.stringify(e));
+        return;
+    }
+    const container =  document.getElementById('appointments-body');
+    container.innerHTML = '';
+    if(inventoryList.length === 0){
+        container.innerHTML = 'No appointments found';
+        return;
+    }
+    appointmentList.forEach(appointment => {
+        container.appendChild(buildAppointmentCard(appointment));
+    });
 }
