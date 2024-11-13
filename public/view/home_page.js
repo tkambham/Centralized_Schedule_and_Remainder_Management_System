@@ -17,15 +17,15 @@ export async function homePageView()
     divWrapper.innerHTML = await response.text();
     divWrapper.classList.add('m-4','p-4');
 
-    let appointmentList;
-    try{
-        appointmentList = await getAppointmentList(currentUser.email);
-    }
-    catch(e){
-        if(DEV) console.log('Failes to the appointment list', e);
-        alert('Failed to load the appointment list', JSON.stringify(e));
-        return;
-    }
+    // let appointmentList;
+    // try{
+    //     appointmentList = await getAppointmentList(currentUser.email);
+    // }
+    // catch(e){
+    //     if(DEV) console.log('Failes to the appointment list', e);
+    //     alert('Failed to load the appointment list', JSON.stringify(e));
+    //     return;
+    // }
 
     root.innerHTML='';
     root.appendChild(divWrapper);
