@@ -18,8 +18,6 @@ export async function onClickSaveAppointment(e) {
     const appointmentNotes = e.target.appointment_notes.value.trim();
     const email = currentUser.email;
 
-    console.log(appointmentTitle, appointmentDate, appointmentTime, earlyRemainder, appointmentType, appointmentNotes);
-
     const appointment = new Appointments({
         appointmentTitle,
         appointmentDate,
