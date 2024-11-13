@@ -1,5 +1,5 @@
 import { currentUser } from "../controller/firebase_auth.js";
-import { renderAppointmentList } from "../controller/home_controller.js";
+import { onClickDeleteAppointment, onClickEditAppointment, renderAppointmentList } from "../controller/home_controller.js";
 import { root } from "./elements.js";
 import { protectedView } from "./protected_view.js";
 
@@ -47,9 +47,13 @@ export function buildAppointmentCard(appointment){
             <h5 class="card-title">${appointment.appointmentTitle}</h5>
             <h6 class="card-subtitle mb-2 text-body-secondary">${appointment.appointmentDate} ${appointment.appointmentTime}</h6>
             <p class="card-text">${appointment.appointmentNotes}</p>
-            <button class="btn btn-outline-primary">Edit</button>
-            <button class="btn btn-outline-danger">Delete</button>
+            <button class="btn btn-outline-primary" id="edit">Edit</button>
+            <button class="btn btn-outline-danger" id="delete">Delete</button>
         </div>
     `;
+    const editButton = div.querySelector('#edit');
+    const deleteButton = div.querySelector('#delete');
+    editButton.onclick = onClickEditAppointment;
+    deleteButton.onclick = onClickDeleteAppointment;
     return div;
 }

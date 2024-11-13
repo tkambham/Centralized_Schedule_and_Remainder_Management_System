@@ -22,3 +22,11 @@ export async function renderAppointmentList(email){
         container.appendChild(buildAppointmentCard(appointment));
     });
 }
+
+export function onClickEditAppointment(e){
+    console.log('Edit appointment');
+}
+
+export function onClickDeleteAppointment(e){
+    console.log('Delete appointment');
+}
