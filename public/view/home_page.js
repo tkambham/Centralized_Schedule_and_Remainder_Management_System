@@ -25,7 +25,23 @@ export async function homePageView()
 export function buildAppointmentCard(appointment){
     const div = document.createElement('div');
     div.classList.add('card', 'm-2', 'p-2', 'd-inline-block');
+    div.style.border = '3px solid';
     div.style.width = '18rem';
+    if(appointment.appointmentType == 'meeting'){
+        div.classList.add('border-primary');
+    }
+    else if(appointment.appointmentType == 'call'){
+        div.classList.add('border-secondary');
+    }
+    else if(appointment.appointmentType == "doctor"){
+        div.classList.add('border-success');
+    }
+    else if(appointment.appointmentType == "workshop"){
+        div.classList.add('border-danger');
+    }
+    else if(appointment.appointmentType == "other"){
+        div.classList.add('border-warning');
+    }
     div.innerHTML = `
         <div class="card-body">
             <h5 class="card-title">${appointment.appointmentTitle}</h5>
