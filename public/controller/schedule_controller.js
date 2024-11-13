@@ -16,6 +16,7 @@ export async function onClickSaveAppointment(e) {
     const earlyRemainder = e.target.early_remainder_time.value;
     const appointmentType = e.target.appointment_type.value;
     const appointmentNotes = e.target.appointment_notes.value.trim();
+    const email = currentUser.email;
 
     console.log(appointmentTitle, appointmentDate, appointmentTime, earlyRemainder, appointmentType, appointmentNotes);
 
@@ -26,7 +27,7 @@ export async function onClickSaveAppointment(e) {
         earlyRemainder,
         appointmentType,
         appointmentNotes,
-        createdBy: currentUser.email
+        email,
     });
 
     try{

@@ -7,7 +7,7 @@ export class Appointments{
         this.earlyRemainder = data.earlyRemainder;
         this.appointmentType = data.appointmentType;
         this.appointmentNotes = data.appointmentNotes;
-        this.createdBy = data.createdBy;
+        this.email = data.email;
     }
     set_docId(id){
         this.docId = id;
@@ -20,7 +20,7 @@ export class Appointments{
             earlyRemainder: this.earlyRemainder,
             appointmentType: this.appointmentType,
             appointmentNotes: this.appointmentNotes,
-            createdBy: this.createdBy,
+            email: this.email,
         }
     }
 }

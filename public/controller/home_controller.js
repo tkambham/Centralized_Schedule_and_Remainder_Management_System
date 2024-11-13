@@ -14,7 +14,7 @@ export async function renderAppointmentList(email){
     }
     const container =  document.getElementById('appointments-body');
     container.innerHTML = '';
-    if(inventoryList.length === 0){
+    if(appointmentList.length === 0){
         container.innerHTML = 'No appointments found';
         return;
     }
