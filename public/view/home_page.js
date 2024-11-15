@@ -43,7 +43,7 @@ export function buildAppointmentCard(appointment){
         div.classList.add('border-warning');
     }
     div.innerHTML = `
-        <div class="card-body">
+        <div class="card-body" id="${appointment.docId}">
             <h5 class="card-title">${appointment.appointmentTitle}</h5>
             <h6 class="card-subtitle mb-2 text-body-secondary">${appointment.appointmentDate} ${appointment.appointmentTime}</h6>
             <p class="card-text">${appointment.appointmentNotes}</p>

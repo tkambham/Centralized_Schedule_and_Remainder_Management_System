@@ -6,6 +6,8 @@ import {
     where,
     orderBy,
     getDocs,
+    deleteDoc,
+    doc,
  } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"
 
 import { app } from "./firebase_core.js";
@@ -39,4 +41,17 @@ export async function getAppointmentList(email){
     });
 
     return appointmentList;
+}
+
+export async function deleteAppointment(email, docId){
+    const q = query(collection(db, APPOINTMENT_COLLECTION),
+        where('email', '==', email),
+    );
+
+    const snapshot = await getDocs(q);
+    snapshot.forEach(async doc => {
+        if(doc.id == docId){
+            await deleteDoc(doc.ref);
+        }
+    });
 }

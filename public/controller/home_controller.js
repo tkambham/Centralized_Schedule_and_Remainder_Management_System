@@ -1,6 +1,7 @@
 import { DEV } from "../model/constants.js";
-import { getAppointmentList } from "./firestore_controller.js";
+import { deleteAppointment, getAppointmentList } from "./firestore_controller.js";
 import { buildAppointmentCard } from "../view/home_page.js";
+import { currentUser } from "./firebase_auth.js";
 
 export async function renderAppointmentList(email){
     let appointmentList;
@@ -27,6 +28,16 @@ export function onClickEditAppointment(e){
     console.log('Edit appointment');
 }
 
-export function onClickDeleteAppointment(e){
-    console.log('Delete appointment');
+export async function onClickDeleteAppointment(e){
+    if(!confirm('Are you sure you want to delete this appointment?')){
+        return;
+    }
+    try{
+        await deleteAppointment(currentUser.email, e.target.parentElement.id);
+        renderAppointmentList(currentUser.email);
+    }
+    catch(error){
+        if(DEV) console.error('Failed to delete the appointment', error);
+        alert('Failed to delete the appointment', JSON.stringify(error));
+    }
 }
