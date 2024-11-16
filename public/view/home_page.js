@@ -1,5 +1,5 @@
 import { currentUser } from "../controller/firebase_auth.js";
-import { onClickDeleteAppointment, onClickEditAppointment, renderAppointmentList } from "../controller/home_controller.js";
+import { onClickDeleteAppointment, onClickEditAppointment, onClickGetCallAppointments, onClickGetMedicalAppointments, onClickGetMeetingAppointments, onClickGetOtherAppointments, onClickGetWorkshopAppointments, renderAppointmentList } from "../controller/home_controller.js";
 import { root } from "./elements.js";
 import { protectedView } from "./protected_view.js";
 
@@ -16,11 +16,11 @@ export async function homePageView()
     divWrapper.innerHTML = await response.text();
     divWrapper.classList.add('m-4','p-4');
 
-    document.getElementById('dropdown_meeting').onclick = onClickGetMeetingAppointments;
-    document.getElementById('dropdown_call').onclick = onClickGetCallAppointments;
-    document.getElementById('dropdown_medical').onclick = onClickGetMedicalAppointments;
-    document.getElementById('dropdown_workshop').onclick = onClickGetWorkshopAppointments;
-    document.getElementById('dropdown_other').onclick = onClickGetOtherAppointments;
+    divWrapper.querySelector('#dropdown_meeting').onclick = onClickGetMeetingAppointments;
+    divWrapper.querySelector('#dropdown_call').onclick = onClickGetCallAppointments;
+    divWrapper.querySelector('#dropdown_medical').onclick = onClickGetMedicalAppointments;
+    divWrapper.querySelector('#dropdown_workshop').onclick = onClickGetWorkshopAppointments;
+    divWrapper.querySelector('#dropdown_other').onclick = onClickGetOtherAppointments;
 
     renderAppointmentList(currentUser.email);
 

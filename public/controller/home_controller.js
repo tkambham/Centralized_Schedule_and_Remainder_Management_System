@@ -1,5 +1,5 @@
 import { DEV } from "../model/constants.js";
-import { deleteAppointment, getAppointmentList } from "./firestore_controller.js";
+import { deleteAppointment, getAppointmentList, getTypeAppointmentList } from "./firestore_controller.js";
 import { buildAppointmentCard } from "../view/home_page.js";
 import { currentUser } from "./firebase_auth.js";
 import { onEditAppointment } from "./manage_conroller.js";
@@ -14,15 +14,7 @@ export async function renderAppointmentList(email){
         alert('Failed to load the appointment list', JSON.stringify(e));
         return;
     }
-    const container =  document.getElementById('appointments-body');
-    container.innerHTML = '';
-    if(appointmentList.length === 0){
-        container.innerHTML = 'No appointments found';
-        return;
-    }
-    appointmentList.forEach(appointment => {
-        container.appendChild(buildAppointmentCard(appointment));
-    });
+    buildContainer(appointmentList);
 }
 
 export function onClickEditAppointment(e){
@@ -60,4 +52,86 @@ export async function onClickDeleteAppointment(e){
         if(DEV) console.error('Failed to delete the appointment', error);
         alert('Failed to delete the appointment', JSON.stringify(error));
     }
+}
+
+export async function onClickGetMeetingAppointments(){
+    let appointmentType = 'meeting';
+    let appointmentList = [];
+    try{
+        appointmentList = await getTypeAppointmentList(currentUser.email, appointmentType);
+    }
+    catch(e){
+        if(DEV) console.error('Failed to get the meeting appointments', e);
+        alert('Failed to get the meeting appointments', JSON.stringify(e));
+    }
+
+    buildContainer(appointmentList);
+}
+
+export async function onClickGetCallAppointments(){
+    let appointmentType = 'call';
+    let appointmentList = [];
+    try{
+        appointmentList = await getTypeAppointmentList(currentUser.email, appointmentType);
+    }
+    catch(e){
+        if(DEV) console.error('Failed to get the meeting appointments', e);
+        alert('Failed to get the meeting appointments', JSON.stringify(e));
+    }
+
+    buildContainer(appointmentList);
+}
+
+export async function onClickGetMedicalAppointments(){
+    let appointmentType = 'doctor';
+    let appointmentList = [];
+    try{
+        appointmentList = await getTypeAppointmentList(currentUser.email, appointmentType);
+    }
+    catch(e){
+        if(DEV) console.error('Failed to get the meeting appointments', e);
+        alert('Failed to get the meeting appointments', JSON.stringify(e));
+    }
+
+    buildContainer(appointmentList);
+}
+
+export async function onClickGetWorkshopAppointments(){
+    let appointmentType = 'workshop';
+    let appointmentList = [];
+    try{
+        appointmentList = await getTypeAppointmentList(currentUser.email, appointmentType);
+    }
+    catch(e){
+        if(DEV) console.error('Failed to get the meeting appointments', e);
+        alert('Failed to get the meeting appointments', JSON.stringify(e));
+    }
+
+    buildContainer(appointmentList);
+}
+
+export async function onClickGetOtherAppointments(){
+    let appointmentType = 'other';
+    let appointmentList = [];
+    try{
+        appointmentList = await getTypeAppointmentList(currentUser.email, appointmentType);
+    }
+    catch(e){
+        if(DEV) console.error('Failed to get the meeting appointments', e);
+        alert('Failed to get the meeting appointments', JSON.stringify(e));
+    }
+
+    buildContainer(appointmentList);
+}
+
+export function buildContainer(appointmentList){
+    const container =  document.getElementById('appointments-body');
+    container.innerHTML = '';
+    if(appointmentList.length === 0){
+        container.innerHTML = 'No appointments found';
+        return;
+    }
+    appointmentList.forEach(appointment => {
+        container.appendChild(buildAppointmentCard(appointment));
+    });
 }

@@ -58,19 +58,26 @@ export async function deleteAppointment(email, docId){
 }
 
 export async function editAppointment(email, docId, updatedData){
-    // const q = query(collection(db, APPOINTMENT_COLLECTION),
-    //     where('email', '==', email),
-    // );
-
-    // console.log('editAppointment', email, docId, updatedData);
-
-    // const snapshot = await getDocs(q);
-    // snapshot.forEach(async doc => {
-    //     if(doc.id == docId){
-    //         await updateDoc(updatedData);
-    //     }
-    // });
-
     const docRef = doc(db, APPOINTMENT_COLLECTION, docId);
     await updateDoc(docRef, updatedData);
+}
+
+export async function getTypeAppointmentList(email, type){
+    let appointmentList = [];
+    const q = query(collection(db, APPOINTMENT_COLLECTION),
+        where('email', '==', email),
+        where('appointmentType', '==', type),
+        orderBy('appointmentDate'),
+        orderBy('appointmentTime')
+    );
+
+    const snapShot = await getDocs(q);
+
+    snapShot.forEach(doc => {
+        const i = new Appointments(doc.data());
+        i.set_docId(doc.id);
+        appointmentList.push(i);
+    });
+
+    return appointmentList;
 }
