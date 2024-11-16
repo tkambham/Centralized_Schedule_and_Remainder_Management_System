@@ -1,5 +1,8 @@
+import { DEV } from "../model/constants.js";
 import { protectedView } from "../view/protected_view.js";
 import { currentUser } from "./firebase_auth.js";
+import { editAppointment } from "./firestore_controller.js";
+import { renderAppointmentList } from "./home_controller.js";
 
 export async function onEditAppointment(data) {
     if (!currentUser) {
@@ -25,11 +28,6 @@ export async function onEditAppointment(data) {
     const remainderInput = document.getElementById('early-remainder-time');
     const modal = document.getElementById('editAppointmentModal');
 
-    if (!titleInput || !dateInput || !timeInput || !notesInput || !typeInput || !remainderInput || !modal) {
-        console.error("One or more required DOM elements are not found. Check your HTML structure and IDs.");
-        return;
-    }
-
     titleInput.value = appointmentName;
     dateInput.value = appointmentDate;
     timeInput.value = appointmentTime;
@@ -39,20 +37,27 @@ export async function onEditAppointment(data) {
 
     modal.classList.remove('d-none');
 
-    document.getElementById('save-appointment').onclick = () => {
+    document.getElementById('save-appointment').onclick = async () => {
         const updatedData = {
-            appointmentId: data.appointmentId,
-            appointmentName: titleInput.value,
+            appointmentTitle: titleInput.value,
             appointmentDate: dateInput.value,
             appointmentTime: timeInput.value,
-            appointmentNotes: notesInput.value,
-            appointmentType: typeInput.value,
             earlyRemainder: remainderInput.value,
+            appointmentType: typeInput.value,
+            appointmentNotes: notesInput.value,
+            email: currentUser.email,
         };
 
-        console.log('Updated Data:', updatedData);
-
-        modal.classList.add('d-none');
+        try{
+            await editAppointment(currentUser.email, data.appointmentId, updatedData);
+            modal.classList.add('d-none');
+            window.location.reload();
+        }
+        catch(e){
+            console.log('Failed to save appointment', e);
+            alert('Failed to save appointment' + JSON.stringify(e));
+            return;
+        }
     };
 
     document.getElementById('cancel-appointment').onclick = () => {

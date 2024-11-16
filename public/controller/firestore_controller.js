@@ -8,6 +8,7 @@ import {
     getDocs,
     deleteDoc,
     doc,
+    updateDoc
  } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"
 
 import { app } from "./firebase_core.js";
@@ -54,4 +55,22 @@ export async function deleteAppointment(email, docId){
             await deleteDoc(doc.ref);
         }
     });
+}
+
+export async function editAppointment(email, docId, updatedData){
+    // const q = query(collection(db, APPOINTMENT_COLLECTION),
+    //     where('email', '==', email),
+    // );
+
+    // console.log('editAppointment', email, docId, updatedData);
+
+    // const snapshot = await getDocs(q);
+    // snapshot.forEach(async doc => {
+    //     if(doc.id == docId){
+    //         await updateDoc(updatedData);
+    //     }
+    // });
+
+    const docRef = doc(db, APPOINTMENT_COLLECTION, docId);
+    await updateDoc(docRef, updatedData);
 }
