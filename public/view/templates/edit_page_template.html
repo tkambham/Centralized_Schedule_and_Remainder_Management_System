@@ -1,0 +1,87 @@
+<div class="container mt-5 d-none" id="editAppointmentModal">
+    <div class="card p-4" style="width: 500px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+        <!-- Heading -->
+        <h2>Edit Appointment</h2>
+
+        <form method="POST" id="form-edit">
+            <div class="mb-3">
+                <label for="appointment-title" class="form-label">Appointment Title</label>
+                <input type="text" class="form-control" id="appointment-title" name="appointment_title" placeholder="Enter the title of your appointment" required>
+            </div>
+            <div class="mb-3">
+                <label for="appointment-date" class="form-label">Date</label>
+                <input type="date" class="form-control" id="appointment-date" name="appointment_date" required>
+            </div>
+            <div class="mb-3">
+                <label for="appointment-time" class="form-label">Time</label>
+                <input type="time" class="form-control" id="appointment-time" name="appointment_time" required>
+            </div>
+            <div class="mb-3" id="early-remainder">
+                <label for="early-remainder-time" class="form-label">Early Remainder</label>
+                <select class="form-select" id="early-remainder-time" name="early_remainder_time" required>
+                    <option value="30" selected>30 mins</option>
+                    <option value="60">1 hour</option>
+                    <option value="120">2 hours</option>
+                    <option value="360">6 hours</option>
+                    <option value="1440">1 day</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="appointment-type" class="form-label">Appointment Type</label>
+                <select class="form-select" id="appointment-type" name="appointment_type" required>
+                    <option value="select" selected>Select a Option</option>
+                    <option value="meeting">Meeting</option>
+                    <option value="call">Call</option>
+                    <option value="doctor">Doctor's Appointment</option>
+                    <option value="workshop">Workshop</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="appointment-notes" class="form-label">Additional Notes</label>
+                <textarea class="form-control" id="appointment-notes" name="appointment_notes" rows="3" placeholder="Any additional information or notes"></textarea>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button id="save-appointment" type="button" class="btn btn-primary">Save</button>
+                <button id="cancel-appointment" type="button" class="btn btn-secondary">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .d-none {
+        display: none;
+    }
+
+    #editAppointmentModal {
+        /* Removed the semi-transparent background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Centering the modal */
+        width: 100%;
+        height: 100%;
+    }
+
+    #editAppointmentModal .card {
+        width: 100%;
+        max-width: 500px; /* Set a maximum width */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Optional: Style the heading to match your design */
+    h2 {
+        font-size: 24px;
+        color: #333;
+    }
+</style>

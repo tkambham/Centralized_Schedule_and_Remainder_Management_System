@@ -47,6 +47,8 @@ export function buildAppointmentCard(appointment){
             <h5 class="card-title">${appointment.appointmentTitle}</h5>
             <h6 class="card-subtitle mb-2 text-body-secondary">${appointment.appointmentDate} ${appointment.appointmentTime}</h6>
             <p class="card-text">${appointment.appointmentNotes}</p>
+            <p class="card-text" style="display: none">${appointment.appointmentType}</p>
+            <p class="card-text" style="display: none">${appointment.earlyRemainder}</p>
             <button class="btn btn-outline-primary" id="edit">Edit</button>
             <button class="btn btn-outline-danger" id="delete">Delete</button>
         </div>
