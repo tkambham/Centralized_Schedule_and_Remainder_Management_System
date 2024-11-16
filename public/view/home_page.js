@@ -16,6 +16,12 @@ export async function homePageView()
     divWrapper.innerHTML = await response.text();
     divWrapper.classList.add('m-4','p-4');
 
+    document.getElementById('dropdown_meeting').onclick = onClickGetMeetingAppointments;
+    document.getElementById('dropdown_call').onclick = onClickGetCallAppointments;
+    document.getElementById('dropdown_medical').onclick = onClickGetMedicalAppointments;
+    document.getElementById('dropdown_workshop').onclick = onClickGetWorkshopAppointments;
+    document.getElementById('dropdown_other').onclick = onClickGetOtherAppointments;
+
     renderAppointmentList(currentUser.email);
 
     root.innerHTML='';
