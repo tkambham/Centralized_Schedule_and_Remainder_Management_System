@@ -39,4 +39,5 @@ export async function onClickSaveAppointment(e) {
     }
 
     e.target.reset();
+    window.location.href = '/';
 }
