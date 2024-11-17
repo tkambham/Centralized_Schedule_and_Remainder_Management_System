@@ -1,8 +1,12 @@
 import { DEV } from "../model/constants.js";
-import { deleteAppointment, getAppointmentList, getTypeAppointmentList } from "./firestore_controller.js";
+import { deleteAppointment, getAppointmentList, getFilteredAppointments } from "./firestore_controller.js";
 import { buildAppointmentCard } from "../view/home_page.js";
 import { currentUser } from "./firebase_auth.js";
 import { onEditAppointment } from "./manage_conroller.js";
+
+let appointmentType;
+let startDate, endDate;
+
 
 export async function renderAppointmentList(email){
     let appointmentList;
@@ -54,76 +58,6 @@ export async function onClickDeleteAppointment(e){
     }
 }
 
-export async function onClickGetMeetingAppointments(){
-    let appointmentType = 'meeting';
-    let appointmentList = [];
-    try{
-        appointmentList = await getTypeAppointmentList(currentUser.email, appointmentType);
-    }
-    catch(e){
-        if(DEV) console.error('Failed to get the meeting appointments', e);
-        alert('Failed to get the meeting appointments', JSON.stringify(e));
-    }
-
-    buildContainer(appointmentList);
-}
-
-export async function onClickGetCallAppointments(){
-    let appointmentType = 'call';
-    let appointmentList = [];
-    try{
-        appointmentList = await getTypeAppointmentList(currentUser.email, appointmentType);
-    }
-    catch(e){
-        if(DEV) console.error('Failed to get the meeting appointments', e);
-        alert('Failed to get the meeting appointments', JSON.stringify(e));
-    }
-
-    buildContainer(appointmentList);
-}
-
-export async function onClickGetMedicalAppointments(){
-    let appointmentType = 'doctor';
-    let appointmentList = [];
-    try{
-        appointmentList = await getTypeAppointmentList(currentUser.email, appointmentType);
-    }
-    catch(e){
-        if(DEV) console.error('Failed to get the meeting appointments', e);
-        alert('Failed to get the meeting appointments', JSON.stringify(e));
-    }
-
-    buildContainer(appointmentList);
-}
-
-export async function onClickGetWorkshopAppointments(){
-    let appointmentType = 'workshop';
-    let appointmentList = [];
-    try{
-        appointmentList = await getTypeAppointmentList(currentUser.email, appointmentType);
-    }
-    catch(e){
-        if(DEV) console.error('Failed to get the meeting appointments', e);
-        alert('Failed to get the meeting appointments', JSON.stringify(e));
-    }
-
-    buildContainer(appointmentList);
-}
-
-export async function onClickGetOtherAppointments(){
-    let appointmentType = 'other';
-    let appointmentList = [];
-    try{
-        appointmentList = await getTypeAppointmentList(currentUser.email, appointmentType);
-    }
-    catch(e){
-        if(DEV) console.error('Failed to get the meeting appointments', e);
-        alert('Failed to get the meeting appointments', JSON.stringify(e));
-    }
-
-    buildContainer(appointmentList);
-}
-
 export function buildContainer(appointmentList){
     const container =  document.getElementById('appointments-body');
     container.innerHTML = '';
@@ -134,4 +68,75 @@ export function buildContainer(appointmentList){
     appointmentList.forEach(appointment => {
         container.appendChild(buildAppointmentCard(appointment));
     });
+}
+
+export async function onClickGetTypeAppointments(e){
+    appointmentType = e.target.innerHTML.toLowerCase();
+    let appointmentList = [];
+    try{
+        if(startDate === undefined || endDate === undefined){
+            appointmentList = await getFilteredAppointments(currentUser.email, appointmentType);
+        }
+        else{
+            appointmentList = await getAppointmentList(currentUser.email, appointmentType, formatDate(startDate), formatDate(endDate));
+        }
+    }
+    catch(e){
+        if(DEV) console.error('Failed to get the meeting appointments', e);
+        alert('Failed to get the meeting appointments', JSON.stringify(e));
+    }
+
+    buildContainer(appointmentList);
+}
+
+export async function onClickFilterAppointments(e){
+    const filter = e.target.id;
+
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const oneDay = 24 * 60 * 60 * 1000;
+
+    if (filter === "today") {
+        startDate = today;
+        endDate = new Date(today.getTime() + oneDay);
+        console.log("Today:", formatDate(startDate), formatDate(endDate));
+    } else if (filter === "tomorrow") {
+        startDate = new Date(today.getTime() + oneDay);
+        endDate = new Date(today.getTime() + 2 * oneDay);
+        console.log("Tomorrow:", formatDate(startDate), formatDate(endDate));
+    } else if (filter === "thisweek") {
+        const dayOfWeek = today.getDay(); // 0 = Sunday, 6 = Saturday
+        startDate = new Date(today.getTime() - dayOfWeek * oneDay);
+        endDate = new Date(startDate.getTime() + 7 * oneDay);
+        console.log("This Week:", formatDate(startDate), formatDate(endDate));
+    } else if (filter === "nextweek") {
+        const dayOfWeek = today.getDay();
+        const startOfNextWeek = new Date(today.getTime() - dayOfWeek * oneDay + 7 * oneDay);
+        startDate = startOfNextWeek;
+        endDate = new Date(startOfNextWeek.getTime() + 7 * oneDay);
+        console.log("Next Week:", formatDate(startDate), formatDate(endDate));
+    } else if (filter === "thismonth") {
+        startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        endDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+        console.log("This Month:", formatDate(startDate), formatDate(endDate));
+    } else {
+        console.error("Unknown filter type:", filter);
+        return;
+    }    
+
+    try {
+        const appointmentList = await getFilteredAppointments(currentUser.email, appointmentType, formatDate(startDate), formatDate(endDate));
+        buildContainer(appointmentList);
+    } catch (error) {
+        if (DEV) console.error('Failed to filter appointments:', error);
+        alert('Failed to filter appointments:', JSON.stringify(error));
+    }
+
+}
+
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`; // Returns 'yyyy-mm-dd'
 }

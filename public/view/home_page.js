@@ -1,5 +1,5 @@
 import { currentUser } from "../controller/firebase_auth.js";
-import { onClickDeleteAppointment, onClickEditAppointment, onClickGetCallAppointments, onClickGetMedicalAppointments, onClickGetMeetingAppointments, onClickGetOtherAppointments, onClickGetWorkshopAppointments, renderAppointmentList } from "../controller/home_controller.js";
+import { onClickDeleteAppointment, onClickEditAppointment, onClickFilterAppointments, onClickGetTypeAppointments, renderAppointmentList } from "../controller/home_controller.js";
 import { root } from "./elements.js";
 import { protectedView } from "./protected_view.js";
 
@@ -16,11 +16,17 @@ export async function homePageView()
     divWrapper.innerHTML = await response.text();
     divWrapper.classList.add('m-4','p-4');
 
-    divWrapper.querySelector('#dropdown_meeting').onclick = onClickGetMeetingAppointments;
-    divWrapper.querySelector('#dropdown_call').onclick = onClickGetCallAppointments;
-    divWrapper.querySelector('#dropdown_medical').onclick = onClickGetMedicalAppointments;
-    divWrapper.querySelector('#dropdown_workshop').onclick = onClickGetWorkshopAppointments;
-    divWrapper.querySelector('#dropdown_other').onclick = onClickGetOtherAppointments;
+    divWrapper.querySelector('#today').onclick = onClickFilterAppointments;
+    divWrapper.querySelector('#tomorrow').onclick = onClickFilterAppointments;
+    divWrapper.querySelector('#thisweek').onclick = onClickFilterAppointments;
+    divWrapper.querySelector('#nextweek').onclick = onClickFilterAppointments;
+    divWrapper.querySelector('#thismonth').onclick = onClickFilterAppointments;
+
+    divWrapper.querySelector('#dropdown_meeting').onclick = onClickGetTypeAppointments;
+    divWrapper.querySelector('#dropdown_call').onclick = onClickGetTypeAppointments;
+    divWrapper.querySelector('#dropdown_medical').onclick = onClickGetTypeAppointments;
+    divWrapper.querySelector('#dropdown_workshop').onclick = onClickGetTypeAppointments;
+    divWrapper.querySelector('#dropdown_other').onclick = onClickGetTypeAppointments;
 
     renderAppointmentList(currentUser.email);
 

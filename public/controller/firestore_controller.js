@@ -60,14 +60,45 @@ export async function editAppointment(email, docId, updatedData){
     await updateDoc(docRef, updatedData);
 }
 
-export async function getTypeAppointmentList(email, type){
+export async function getFilteredAppointments(email, type, startdate, enddate){
+    console.log('Email:', email);
+    console.log('Type:', type);
+    console.log('Start Date:', startdate);
+    console.log('End Date:', enddate);
+
+    let q;
+
     let appointmentList = [];
-    const q = query(collection(db, APPOINTMENT_COLLECTION),
-        where('email', '==', email),
-        where('appointmentType', '==', type),
-        orderBy('appointmentDate'),
-        orderBy('appointmentTime')
-    );
+    if(!type){
+        q = query(
+            collection(db, APPOINTMENT_COLLECTION),
+            where('email', '==', email),
+            where('appointmentDate', '>=', startdate),
+            where('appointmentDate', '<', enddate),
+            orderBy('appointmentDate'),
+            orderBy('appointmentTime')
+        );
+    }
+    else if(!startdate && !enddate){
+        q = query(
+            collection(db, APPOINTMENT_COLLECTION),
+            where('email', '==', email),
+            where('appointmentType', '==', type),
+            orderBy('appointmentDate'),
+            orderBy('appointmentTime')
+        );
+    }
+    else{
+        q = query(
+            collection(db, APPOINTMENT_COLLECTION),
+            where('email', '==', email),
+            where('appointmentType', '==', type),
+            where('appointmentDate', '>=', startdate),
+            where('appointmentDate', '<', enddate),
+            orderBy('appointmentDate'),
+            orderBy('appointmentTime')
+        );
+    }
 
     const snapShot = await getDocs(q);
 
