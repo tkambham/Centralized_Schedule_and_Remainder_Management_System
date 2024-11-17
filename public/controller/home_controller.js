@@ -53,7 +53,7 @@ export async function onClickDeleteAppointment(e){
         renderAppointmentList(currentUser.email);
     }
     catch(error){
-        if(DEV) console.error('Failed to delete the appointment', error);
+        if(DEV) console.log('Failed to delete the appointment', error);
         alert('Failed to delete the appointment', JSON.stringify(error));
     }
 }
@@ -72,21 +72,17 @@ export function buildContainer(appointmentList){
 
 export async function onClickGetTypeAppointments(e){
     appointmentType = e.target.innerHTML.toLowerCase();
-    console.log('Appointment Type:', appointmentType);
     let appointmentList = [];
     try{
         if(startDate === undefined || endDate === undefined){
-            console.log('Coming here with no start and end date');
             appointmentList = await getFilteredAppointments(currentUser.email, appointmentType);
         }
         else{
-            console.log('Coming here with start and end date');
             appointmentList = await getFilteredAppointments(currentUser.email, appointmentType, formatDate(startDate), formatDate(endDate));
-            console.log('Appointment List:', appointmentList);
         }
     }
     catch(e){
-        if(DEV) console.error('Failed to get the meeting appointments', e);
+        if(DEV) console.log('Failed to get the meeting appointments', e);
         alert('Failed to get the meeting appointments', JSON.stringify(e));
     }
     buildContainer(appointmentList);
