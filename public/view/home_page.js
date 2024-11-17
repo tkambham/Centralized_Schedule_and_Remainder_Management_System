@@ -16,6 +16,7 @@ export async function homePageView()
     divWrapper.innerHTML = await response.text();
     divWrapper.classList.add('m-4','p-4');
 
+    divWrapper.querySelector('#all').onclick = onClickFilterAppointments;
     divWrapper.querySelector('#today').onclick = onClickFilterAppointments;
     divWrapper.querySelector('#tomorrow').onclick = onClickFilterAppointments;
     divWrapper.querySelector('#thisweek').onclick = onClickFilterAppointments;

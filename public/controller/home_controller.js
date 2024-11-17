@@ -72,20 +72,23 @@ export function buildContainer(appointmentList){
 
 export async function onClickGetTypeAppointments(e){
     appointmentType = e.target.innerHTML.toLowerCase();
+    console.log('Appointment Type:', appointmentType);
     let appointmentList = [];
     try{
         if(startDate === undefined || endDate === undefined){
+            console.log('Coming here with no start and end date');
             appointmentList = await getFilteredAppointments(currentUser.email, appointmentType);
         }
         else{
-            appointmentList = await getAppointmentList(currentUser.email, appointmentType, formatDate(startDate), formatDate(endDate));
+            console.log('Coming here with start and end date');
+            appointmentList = await getFilteredAppointments(currentUser.email, appointmentType, formatDate(startDate), formatDate(endDate));
+            console.log('Appointment List:', appointmentList);
         }
     }
     catch(e){
         if(DEV) console.error('Failed to get the meeting appointments', e);
         alert('Failed to get the meeting appointments', JSON.stringify(e));
     }
-
     buildContainer(appointmentList);
 }
 
@@ -99,28 +102,24 @@ export async function onClickFilterAppointments(e){
     if (filter === "today") {
         startDate = today;
         endDate = new Date(today.getTime() + oneDay);
-        console.log("Today:", formatDate(startDate), formatDate(endDate));
     } else if (filter === "tomorrow") {
         startDate = new Date(today.getTime() + oneDay);
         endDate = new Date(today.getTime() + 2 * oneDay);
-        console.log("Tomorrow:", formatDate(startDate), formatDate(endDate));
     } else if (filter === "thisweek") {
         const dayOfWeek = today.getDay(); // 0 = Sunday, 6 = Saturday
         startDate = new Date(today.getTime() - dayOfWeek * oneDay);
         endDate = new Date(startDate.getTime() + 7 * oneDay);
-        console.log("This Week:", formatDate(startDate), formatDate(endDate));
     } else if (filter === "nextweek") {
         const dayOfWeek = today.getDay();
         const startOfNextWeek = new Date(today.getTime() - dayOfWeek * oneDay + 7 * oneDay);
         startDate = startOfNextWeek;
         endDate = new Date(startOfNextWeek.getTime() + 7 * oneDay);
-        console.log("Next Week:", formatDate(startDate), formatDate(endDate));
     } else if (filter === "thismonth") {
         startDate = new Date(today.getFullYear(), today.getMonth(), 1);
         endDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-        console.log("This Month:", formatDate(startDate), formatDate(endDate));
-    } else {
-        console.error("Unknown filter type:", filter);
+    } else if (filter === "all") {
+        const appointmentList = await getFilteredAppointments(currentUser.email, appointmentType);
+        buildContainer(appointmentList);
         return;
     }    
 
