@@ -73,8 +73,6 @@ export async function getFilteredAppointments(email, type, startdate, enddate){
             orderBy('appointmentDate'),
             orderBy('appointmentTime')
         );
-        console.log('!type && startdate && enddate');
-        console.log('Appointment List:', appointmentList);
     }
     else if(type && (!startdate || !enddate)){
         q = query(
@@ -84,8 +82,6 @@ export async function getFilteredAppointments(email, type, startdate, enddate){
             orderBy('appointmentDate'),
             orderBy('appointmentTime')
         );
-        console.log('type && (!startdate && !enddate)');
-        console.log('Appointment List:', appointmentList);
     }
     else if(type && startdate && enddate){
         q = query(
@@ -97,8 +93,6 @@ export async function getFilteredAppointments(email, type, startdate, enddate){
             orderBy('appointmentDate'),
             orderBy('appointmentTime')
         );
-        console.log('type && startdate && enddate');
-        console.log('Appointment List:', appointmentList);
     }
 
     const snapShot = await getDocs(q);

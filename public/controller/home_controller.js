@@ -114,16 +114,16 @@ export async function onClickFilterAppointments(e){
         startDate = new Date(today.getFullYear(), today.getMonth(), 1);
         endDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
     } else if (filter === "all") {
-        const appointmentList = await getFilteredAppointments(currentUser.email, appointmentType);
-        buildContainer(appointmentList);
-        return;
-    }    
+        startDate = today;
+        let endDateString = "2099-12-31";
+        endDate = new Date(endDateString);
+    } 
 
     try {
         const appointmentList = await getFilteredAppointments(currentUser.email, appointmentType, formatDate(startDate), formatDate(endDate));
         buildContainer(appointmentList);
     } catch (error) {
-        if (DEV) console.error('Failed to filter appointments:', error);
+        if (DEV) console.log('Failed to filter appointments:', error);
         alert('Failed to filter appointments:', JSON.stringify(error));
     }
 
