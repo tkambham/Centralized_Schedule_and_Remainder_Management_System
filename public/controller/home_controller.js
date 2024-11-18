@@ -18,6 +18,7 @@ export async function renderAppointmentList(email){
         alert('Failed to load the appointment list', JSON.stringify(e));
         return;
     }
+    appointmentType = '';
     buildContainer(appointmentList);
 }
 
