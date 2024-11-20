@@ -2,9 +2,11 @@
     <div id="menu-bar" class="d-flex justify-content-between align-items-center">
         <div class="d-flex gap-2 justify-content-between align-items-center">
             <h1>Appointments</h1>
+        </div>
+        <div class="dropdown d-flex gap-2">
             <div class="dropdown">
-                <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Filter
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Date Filter
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" id="all">All</a></li>
@@ -15,13 +17,18 @@
                     <li><a class="dropdown-item" id="thismonth">This month</a></li>
                 </ul>
             </div>
-        </div>
-        <div class="d-flex gap-2">
-            <button type="button" id="dropdown_meeting" class="btn btn-primary">Meeting</button>
-            <button type="button" id="dropdown_call" class="btn btn-secondary">Call</button>
-            <button type="button" id="dropdown_medical" class="btn btn-success">Medical</button>
-            <button type="button" id="dropdown_workshop" class="btn btn-danger">Workshop</button>
-            <button type="button" id="dropdown_other" class="btn btn-warning">Other</button>
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    Type Filter
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" id="dropdown_meeting">Meeting</a></li>
+                    <li><a class="dropdown-item" id="dropdown_call">Call</a></li>
+                    <li><a class="dropdown-item" id="dropdown_medical">Medical</a></li>
+                    <li><a class="dropdown-item" id="dropdown_workshop">Workshop</a></li>
+                    <li><a class="dropdown-item" id="dropdown_other">Other</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <div id="appointments-body">
