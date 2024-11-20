@@ -23,6 +23,7 @@ export async function homePageView()
     divWrapper.querySelector('#nextweek').onclick = onClickFilterAppointments;
     divWrapper.querySelector('#thismonth').onclick = onClickFilterAppointments;
 
+    divWrapper.querySelector('#dropdown_all').onclick = onClickGetTypeAppointments;
     divWrapper.querySelector('#dropdown_meeting').onclick = onClickGetTypeAppointments;
     divWrapper.querySelector('#dropdown_call').onclick = onClickGetTypeAppointments;
     divWrapper.querySelector('#dropdown_medical').onclick = onClickGetTypeAppointments;

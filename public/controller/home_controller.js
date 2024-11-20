@@ -79,6 +79,12 @@ export async function onClickGetTypeAppointments(e){
         if(startDate === undefined || endDate === undefined){
             appointmentList = await getFilteredAppointments(currentUser.email, appointmentType);
         }
+        else if(appointmentType == 'all' && startDate !== undefined && endDate !== undefined){
+            appointmentList = await getFilteredAppointments(currentUser.email, "", formatDate(startDate), formatDate(endDate));
+        }
+        else if(appointmentType == 'all' && (startDate === undefined || endDate === undefined)){
+            appointmentList = await getAppointmentList(currentUser.email);
+        }
         else{
             appointmentList = await getFilteredAppointments(currentUser.email, appointmentType, formatDate(startDate), formatDate(endDate));
         }
