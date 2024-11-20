@@ -76,18 +76,14 @@ export async function onClickGetTypeAppointments(e){
     appointmentType = e.target.innerHTML.toLowerCase();
     let appointmentList = [];
     try{
-        console.log(appointmentType == 'all' && (startDate === undefined || endDate === undefined));
         if(appointmentType == '' && (startDate === undefined || endDate === undefined)){
             appointmentList = await getFilteredAppointments(currentUser.email, appointmentType);
-            console.log(appointmentList);
         }
         else if(appointmentType == 'all' && startDate !== undefined && endDate !== undefined){
             appointmentList = await getFilteredAppointments(currentUser.email, "", formatDate(startDate), formatDate(endDate));
-            console.log(appointmentList);
         }
         else if(appointmentType == 'all' && (startDate === undefined || endDate === undefined)){
             appointmentList = await getAppointmentList(currentUser.email);
-            console.log(appointmentList);
         }
         else{
             appointmentList = await getFilteredAppointments(currentUser.email, appointmentType, formatDate(startDate), formatDate(endDate));
