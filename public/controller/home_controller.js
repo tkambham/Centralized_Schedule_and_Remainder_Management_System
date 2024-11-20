@@ -74,6 +74,7 @@ export function buildContainer(appointmentList){
 
 export async function onClickGetTypeAppointments(e){
     appointmentType = e.target.innerHTML.toLowerCase();
+    document.querySelector('#type_filter_dropdown').innerHTML = e.target.innerHTML;
     let appointmentList = [];
     try{
         if(appointmentType == '' && (startDate === undefined || endDate === undefined)){
@@ -98,6 +99,7 @@ export async function onClickGetTypeAppointments(e){
 
 export async function onClickFilterAppointments(e){
     const filter = e.target.id;
+    document.getElementById('date_filter_dropdown').innerHTML = e.target.innerHTML;
 
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
