@@ -3,6 +3,7 @@ import { deleteAppointment, getAppointmentList, getFilteredAppointments } from "
 import { buildAppointmentCard } from "../view/home_page.js";
 import { currentUser } from "./firebase_auth.js";
 import { onEditAppointment } from "./manage_conroller.js";
+import { checkAppointmentsForNotifications } from "./notification_controller.js";
 
 let appointmentType;
 let startDate, endDate;
@@ -135,4 +136,17 @@ function formatDate(date) {
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`; // Returns 'yyyy-mm-dd'
+}
+
+export async function renderAppointmentListForNotification(email) {
+    let appointmentList;
+    try{
+        appointmentList = await getAppointmentList(email);
+    }
+    catch(e){
+        if(DEV) console.log('Failes to the appointment list', e);
+        alert('Failed to load the appointment list', JSON.stringify(e));
+        return;
+    }
+    checkAppointmentsForNotifications(appointmentList);
 }
