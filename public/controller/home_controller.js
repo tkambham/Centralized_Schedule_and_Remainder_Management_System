@@ -86,6 +86,9 @@ export async function onClickGetTypeAppointments(e){
         else if(appointmentType == 'all' && (startDate === undefined || endDate === undefined)){
             appointmentList = await getAppointmentList(currentUser.email);
         }
+        else if(startDate === undefined || endDate === undefined){
+            appointmentList = await getFilteredAppointments(currentUser.email, appointmentType);
+        }
         else{
             appointmentList = await getFilteredAppointments(currentUser.email, appointmentType, formatDate(startDate), formatDate(endDate));
         }
@@ -127,6 +130,9 @@ export async function onClickFilterAppointments(e){
         startDate = today;
         let endDateString = "2099-12-31";
         endDate = new Date(endDateString);
+        if(appointmentType === 'all'){
+            appointmentType = '';
+        }
     } 
 
     try {
