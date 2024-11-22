@@ -23,6 +23,7 @@ export async function homePageView()
     divWrapper.querySelector('#nextweek').onclick = onClickFilterAppointments;
     divWrapper.querySelector('#thismonth').onclick = onClickFilterAppointments;
 
+    divWrapper.querySelector('#dropdown_all').onclick = onClickGetTypeAppointments;
     divWrapper.querySelector('#dropdown_meeting').onclick = onClickGetTypeAppointments;
     divWrapper.querySelector('#dropdown_call').onclick = onClickGetTypeAppointments;
     divWrapper.querySelector('#dropdown_medical').onclick = onClickGetTypeAppointments;
@@ -55,10 +56,11 @@ export function buildAppointmentCard(appointment){
     else if(appointment.appointmentType == "other"){
         div.classList.add('border-warning');
     }
+    
     div.innerHTML = `
         <div class="card-body" id="${appointment.docId}">
             <h5 class="card-title">${appointment.appointmentTitle}</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">${appointment.appointmentDate} ${appointment.appointmentTime}</h6>
+            <h6 class="card-subtitle mb-2 text-body-secondary">${formatDate(appointment.appointmentDate)} @${appointment.appointmentTime}</h6>
             <p class="card-text">${appointment.appointmentNotes}</p>
             <p class="card-text" style="display: none">${appointment.appointmentType}</p>
             <p class="card-text" style="display: none">${appointment.earlyRemainder}</p>
@@ -72,3 +74,15 @@ export function buildAppointmentCard(appointment){
     deleteButton.onclick = onClickDeleteAppointment;
     return div;
 }
+
+function formatDate(inputDate) {
+    const date = new Date(inputDate); 
+    const options = {
+      day: '2-digit',
+      month: 'short', 
+      year: '2-digit',
+    };
+    const formattedDate = date.toLocaleDateString('en-GB', options).replace(/,/g, '').toUpperCase();
+    
+    return formattedDate;
+  }
